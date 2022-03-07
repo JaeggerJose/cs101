@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <string.h>
 
 void print_vorform(int i) {
     FILE* fp;
@@ -9,20 +8,16 @@ void print_vorform(int i) {
     time_t curtime;
     time(&curtime);
     fprintf(fp, "======== lotto649 =========\n=");
-    printf("======== lotto649 =========\n=");
     fwrite(ctime(&curtime), 24, 1, fp);
     fseek(fp, 0, SEEK_SET);
     fread(ctime(&curtime), 24, 1, fp);
-    printf("%.24s", ctime(&curtime));
     fprintf(fp," =\n");
-    printf(" =\n");
     fclose(fp);
 }
 
 int fwriteforma(int i) {
     FILE* fp;
     fp = fopen("lotto.txt", "a+");
-    printf("[%d]: ", i);
     fprintf(fp, "[%d]: ", i);
     fclose(fp);
     return 0;
@@ -80,6 +75,7 @@ int array_rerandom(int lotto_array[6]) {
             }
         }
     }
+    return lotto_array[6];
 }
 
 int print_array (int lotto_array[6]) {
@@ -87,10 +83,8 @@ int print_array (int lotto_array[6]) {
     fp = fopen("lotto.txt", "a");
     for(int j = 0 ; j < 6 ; j++) {
         fprintf(fp, "%.2d ", lotto_array[j]);
-        printf("%.2d ", lotto_array[j]);
     }
     fprintf(fp, "\n");
-    printf("\n");
     fclose(fp);
 }
 
@@ -99,15 +93,12 @@ int print_last(int num_row) {
     fp = fopen("lotto.txt", "a+");
     for(int i = num_row+1; i <= 6; i++) {
         fprintf(fp,"[%d]: " , i);
-        printf("[%d]: " , i);
         for(int j = 0; j < 6; j++) {
-            printf("-- ");
             fprintf(fp, "-- ");
-            j == 5 ? printf("\n"), fprintf(fp,"\n") : 1;
+            j == 5 ? fprintf(fp,"\n") : 1;
         }
     }
     fprintf(fp, "======== csie@CGU =========\n");
-    printf("======== csie@CGU =========\n");
     fclose(fp);
 }
 
@@ -120,15 +111,14 @@ int main() {
     print_vorform(row_num); //fprintf1
     srand((unsigned) curtime);
     for (int i = 1; i <= row_num; i++) {
-        int lotto_array[6] = {0};
+        int lotto_array[7] = {0};
         get_rad_num(lotto_array);
         fwriteforma(i); //fprintf2
-        lotto_array[6] = array_swap(lotto_array);
         lotto_array[6] = array_rerandom(lotto_array);
         lotto_array[6] = array_swap(lotto_array);
         print_array(lotto_array); //fprintf3
     }
     print_last(row_num); //fprintf4
-    fclose;
+    fclose(fp);
     return 0;
 }
