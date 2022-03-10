@@ -104,7 +104,9 @@ int main() {
     snprintf(s1, sizeof(s1), "lotto[%05d].txt",sell_numpluse[0]);
     fp = fopen(s1, "w+"); 
     fclose(fr);
-    int row_num = sell_numpluse[0];
+    int row_num = 0;
+    printf("\nplease enter your lotto row num");
+    scanf("%d", &row_num);
     time_t curtime;
     time(&curtime);
     fprintf(fp, "======== lotto649 =========\n");
