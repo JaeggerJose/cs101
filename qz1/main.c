@@ -89,8 +89,7 @@ int main() {
     int n =  snprintf(NULL, 0, "lotto[%05d].txt",sell_numpluse[0]);
     char s1[n+1];
     snprintf(s1, sizeof(s1), "lotto[%05d].txt",sell_numpluse[0]);
-    fp = fopen(s1, "w+");
-    
+    fp = fopen(s1, "w+"); 
     fclose(fr);
     int row_num = sell_numpluse[0];
     time_t curtime;
@@ -98,13 +97,24 @@ int main() {
     fprintf(fp, "======== lotto649 =========\n");
     fprintf(fp, "=======+ No. %05d +=======\n= %.24s=\n",  sell_numpluse[0], ctime(&curtime));
     srand((unsigned) curtime);
-    for (int i = 1; i <= row_num; i++) {
-        int lotto_array[8] = {0};
-        get_rad_num(lotto_array);
-        fprintf(fp, "[%d]: ", i);
-        lotto_array[8] = array_rerandom(lotto_array);
-        lotto_array[8] = array_swap(lotto_array);
-        print_array(lotto_array, fp); //fprintf3
+    if (row_num <= 5) {
+        for (int i = 1; i <= row_num; i++) {
+            int lotto_array[8] = {0};
+            get_rad_num(lotto_array);
+            fprintf(fp, "[%d]: ", i);
+            lotto_array[8] = array_rerandom(lotto_array);
+            lotto_array[8] = array_swap(lotto_array);
+            print_array(lotto_array, fp); //fprintf3
+        }
+    } else {
+        for (int i = 1; i <= 5; i++) {
+            int lotto_array[8] = {0};
+            get_rad_num(lotto_array);
+            fprintf(fp, "[%d]: ", i);
+            lotto_array[8] = array_rerandom(lotto_array);
+            lotto_array[8] = array_swap(lotto_array);
+            print_array(lotto_array, fp); //fprintf3
+        }
     }
     print_last(row_num, fp); //fprintf4
     fclose(fp);
