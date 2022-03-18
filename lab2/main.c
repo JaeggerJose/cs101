@@ -2,6 +2,15 @@
 #include <stdlib.h>
 #include <time.h>
 
+typedef struct lotto_record_t {
+    int lotto_num;
+    float lotto_receipt;
+    int emp_id;
+    char lotto_date[16];
+    char lotto_time[16];
+}lotto_record_t;
+
+int save_rownum (int row_num) {}
 int save_idfile() {
     FILE* fid;
     fid = fopen("operatid_name.bin", "wb+");
@@ -14,7 +23,6 @@ int save_idfile() {
     fwrite(id_num, sizeof(int), 1, fid);
     fclose(fid);
 }
-
 int rand_num_mod70(int lotto_array) {
     lotto_array = rand() % 70;
     while(lotto_array == 0) { 
@@ -83,10 +91,25 @@ int print_last(int num_row, FILE*fp, int id_numx) {
     fprintf(fp, "======== csie@CGU =========\n");
 }
 
+void frecord (int sell_num, int id_numx, int row_num) {
+    FILE* femp;
+    time_t curtime = time(0);
+    lotto_record_t record;
+    record.lotto_num = sell_num;
+    record.lotto_receipt = ((row_num*50)) * 1.1;
+    record.emp_id = id_numx;
+    strftime (record.lotto_date, 100, "%Y%m%d", localtime(&curtime));
+    strftime (record.lotto_time, 100, "%H:%M:%S", localtime(&curtime));
+    femp = fopen("records.bin", "ab");
+    fwrite(&record, sizeof(record), 1, femp);
+    fclose(femp);
+}
 int main() {
     FILE* fp;
     FILE* fr;
-    int sell_num[1]= {1}, sell_numpluse[1]= {1};
+    int sell_num[1]= {1}, sell_numpluse[1]= {1}, row_num = 0, id_numx;
+    printf("\nplease enter your lotto row num: ");
+    scanf("%d", &row_num);
         if((fr = fopen("a.bin", "r")) == NULL) {
             fr = fopen("a.bin", "wb");
             fwrite(sell_num, sizeof(int), 1, fr);
@@ -104,9 +127,6 @@ int main() {
     snprintf(s1, sizeof(s1), "lotto[%05d].txt",sell_numpluse[0]);
     fp = fopen(s1, "w+"); 
     fclose(fr);
-    int row_num = 0;
-    printf("\nplease enter your lotto row num");
-    scanf("%d", &row_num);
     time_t curtime;
     time(&curtime);
     fprintf(fp, "======== lotto649 =========\n");
@@ -131,9 +151,9 @@ int main() {
             print_array(lotto_array, fp); //fprintf3
         }
     }
-    int id_numx;
     id_numx = save_idfile();
     print_last(row_num, fp, id_numx); //fprintf4
     fclose(fp);
+    frecord(sell_numpluse[0], id_numx, row_num);
     return 0;
 }
