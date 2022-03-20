@@ -38,12 +38,12 @@ int save_idfile( ) {
     int idbuffer =0;
     printf("\nPlese enter your id: ");
     scanf("%d", &idbuffer);
+    id_num[0] = idbuffer;
+    fwrite(id_num, sizeof(int), 1, fid);
     if(idbuffer == 0) {
         save_emp_id();
     }
     return idbuffer;
-    id_num[0] = idbuffer;
-    fwrite(id_num, sizeof(int), 1, fid);
     fclose(fid);
 }
 int rand_num_mod70(int lotto_array) {
