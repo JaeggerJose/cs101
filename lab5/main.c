@@ -52,9 +52,9 @@ int main(void) {
     print_array(ip, n);
     free(ip);
     ip = NULL;
-  	printf("No.2 -------------------\n");
+  	printf("\nNo.2 -------------------\n");
   	array_list_t p;
-	  p.n = n;
+	  p.n = 20;
 	  p.get_int_array_list = get_int_array;
 	  p.set_value_list = set_value;
 	  p.print_array_list = print_array;
@@ -63,7 +63,7 @@ int main(void) {
 		  p.set_value_list(iptr + i, i + 1);
 	  }
 	  p.print_array_list(iptr, p.n);
-	  printf("No.3 -------------------\n");
+	  printf("\nNo.3 -------------------\n");
 	  char a[] = "IU!IU!";
 	  char b[] = "@CGU";
 	  printf("add_str_func = %s\n", add_str_func(a, b, func));
